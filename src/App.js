@@ -12,8 +12,8 @@ function App() {
     <>
    <BrowserRouter>
    <Routes>
-    <Route path='/' element={<Counter></Counter>}></Route>
-    <Route path='/edit/:id' element={<Update></Update>}></Route>
+    <Route path='/' element={<Counter/>}></Route>
+    <Route path='/edit/:index' element={<Update/>}></Route>
    </Routes>
    </BrowserRouter>
 

@@ -6,31 +6,32 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
 import { addUser } from './counterSlice';
+import { deleteUser } from './counterSlice';
 
-const getLocalDetails =()=>
-{
-    let stu_details = localStorage.getItem('details');
-    //console.log(stu_details);
-    if(stu_details)
-    {
-        return JSON.parse(localStorage.getItem('details'))
-    }
-    else{
-        return [];
-    }
-}
+// const getLocalDetails =()=>
+// {
+//     let stu_details = localStorage.getItem('details');
+//     //console.log(stu_details);
+//     if(stu_details)
+//     {
+//         return JSON.parse(localStorage.getItem('details'))
+//     }
+//     else{
+//         return [];
+//     }
+// }
 
 
 
 export function Counter() {
-    const users = useSelector((state) => state.users)
-    console.log(users);
+    const users = useSelector((state) => state.usersData.users)
+    //console.log('users',users);
     const dispatch = useDispatch()
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [inputdata, setinputdata] = useState(getLocalDetails());
+    const [inputdata, setinputdata] = useState(users);
     const navigate = useNavigate()
 
     const {
@@ -41,25 +42,34 @@ export function Counter() {
     } = useForm()
 
     const onSubmit = (user) => {
-        console.log(user)
+        //console.log('user',user)
 
         // setinputdata([...inputdata, user]);
         // //inputdata.firstName=user.name;
         // reset();
         // handleClose();
-        dispatch(addUser(setinputdata([...inputdata,user])));
+        dispatch(addUser(user));
         reset();
         handleClose();
         
        
     }
 
-    useEffect(()=>
-    {
-        //console.log('Before storing in local storage:', inputdata);
-        localStorage.setItem('details',JSON.stringify(inputdata))
-        //console.log('After storing in local storage:', inputdata);
-    }, [inputdata]);
+    // useEffect(()=>
+    // {
+    //     //console.log('Before storing in local storage:', inputdata);
+    //     localStorage.setItem('details',JSON.stringify(inputdata))
+    //     //console.log('After storing in local storage:', inputdata);
+    // }, [inputdata]);
+
+    const handleDelete =(index,user)=>
+  {
+    console.log('index',index)
+       dispatch(deleteUser({index:user.index}))
+       
+  }
+
+   
   
 
 
@@ -145,14 +155,26 @@ export function Counter() {
                     </tr>
                 </thead>
                 <tbody>
-                    {inputdata?.map((user, index) => (
+                    {/* {inputdata?.map((user, index) => (
                         <tr key={index}>
                             <td>{index+1}</td>
                             <td>{user.firstName} {user.lastName}</td>
                             <td>{user.email}</td>
                             <td>
-                                <Link to={`/edit/${index}`} className='btn btn-sm btn-primary'>Edit</Link>
+                                <Link to={`/edit/${index}`} className='btn btn-sm btn-success'>Edit</Link>
                                 <button className='btn btn-sm btn-danger ms-2'>Delete</button>
+                            </td>
+                        </tr>
+                    ))} */}
+
+                   {users?.map((user, index) => (
+                        <tr key={index}>
+                            <td>{index+1}</td>
+                            <td>{user.firstName} {user.lastName}</td>
+                            <td>{user.email}</td>
+                            <td>
+                                <Link to={`/edit/${index}`} className='btn btn-sm btn-success'>Edit</Link>
+                                <button className='btn btn-sm btn-danger ms-2' onClick={()=> handleDelete(index,user)}>Delete</button>
                             </td>
                         </tr>
                     ))}
