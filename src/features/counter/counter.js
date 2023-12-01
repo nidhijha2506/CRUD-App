@@ -65,7 +65,10 @@ export function Counter() {
     const handleDelete =(index,user)=>
   {
     console.log('index',index)
-       dispatch(deleteUser({index:user.index}))
+    const indexValue= index;
+    const updatedUser = { ...user, index: +indexValue };
+    dispatch(deleteUser(updatedUser));
+       //dispatch(deleteUser({index:user.index}))
        
   }
 

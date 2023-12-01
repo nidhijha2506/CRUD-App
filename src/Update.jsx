@@ -30,11 +30,17 @@ function Update() {
   const onUpdate = (user) => {
     console.log('index on update',index)
     console.log('submitdata',user);
+    const indexValue= index;
+    const updatedUser = { ...user, index: +indexValue };
 
+    console.log('index on update', indexValue);
+    console.log('submitdata', updatedUser);
+    
+    dispatch(updateUser(updatedUser));
     //setupdatedata([...userList, usersData]);
     // //inputdata.firstName=user.name;
     //console.log('newdata',user.firstName);
-    dispatch(updateUser(user,index));
+    //dispatch(updateUser(user));
   
     navigate('/');
     // reset();
