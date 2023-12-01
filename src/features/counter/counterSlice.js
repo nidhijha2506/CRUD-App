@@ -15,14 +15,21 @@ export const userSlice = createSlice({
      },
      updateUser: (state, action) =>
      {
-         state.users = [...state.users,action.payload];
+         //state.users = [...state.users,action.payload];
         // const {index,usersData}= action.payload;
         // const uu = state.find(user =>user.index == index)
         // if(uu)
         // {
         //   uu=usersData;
         // }
-        console.log('usrlist',userList)
+        state.users.map((user,id) =>
+        {
+          if (user.index === action.payload.index)
+          {
+            user.firstName = action.payload.firstName;
+          }
+        })
+        //console.log('usrlist',userList)
         
      },
      deleteUser:(state,action)=>
@@ -34,10 +41,10 @@ export const userSlice = createSlice({
         // {
         //   return state.filter(f => f.index !== index)
         // }
-        state.users =state.users.filter((user) => user.index !== action.payload);
+        state.users =state.users.filter((user) => user.index !== action.payload.index);
         console.log('hello')
-     }
-  }
+     },
+  },
 })
 
 

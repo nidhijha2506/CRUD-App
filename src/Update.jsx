@@ -15,9 +15,10 @@ function Update() {
   const existingUser = users?.filter((element,index) => index === index);
   //console.log('existinguser',existingUser)
   const usersData= existingUser[index];
-  //const [updatedata, setupdatedata]=useState({...usersData});
+  const [updatedata, setupdatedata]=useState({...usersData});
   const dispatch = useDispatch();
  const navigate = useNavigate();
+ console.log('index is',index)
 
   const {
     register,
@@ -26,13 +27,14 @@ function Update() {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (user) => {
+  const onUpdate = (user) => {
+    console.log('index on update',index)
     console.log('submitdata',user);
 
     //setupdatedata([...userList, usersData]);
     // //inputdata.firstName=user.name;
     //console.log('newdata',user.firstName);
-    dispatch(updateUser(user));
+    dispatch(updateUser(user,index));
   
     navigate('/');
     // reset();
@@ -48,7 +50,7 @@ function Update() {
     <div className='d-flex w-100 vh-100 justify-content-center align-items-center'>
       <div className='w-50 border bg-secondary text-white p-5'>
         <h3 className='text-center'>Update User</h3>
-        <form onSubmit={handleSubmit(onSubmit)} className='editform'>
+        <form onSubmit={handleSubmit(onUpdate)} className='editform'>
           <label className="fw-bold mt-3 name-label">Full Name&nbsp;&nbsp;
             <input
               className='input_name'
